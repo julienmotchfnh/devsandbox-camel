@@ -25,38 +25,9 @@ components:
       # args: ['JAVA_HOME=/home/tooling/.sdkman/candidates/java/17.0.3-tem']
       # args: ['JAVA_HOME','=','/home/tooling/.sdkman/candidates/java/17.0.3-tem']
 
-  - name: webapp
-    container:
-      image: quay.io/redhatintegration/tutorial-web-app:latest
-      env:
-        - name: NODE_ENV
-          value: production
-        - name: THREESCALE_WILDCARD_DOMAIN
-          value: local.localdomain
-        - name: OPENSHIFT_VERSION
-          value: '4'
-        - name: WALKTHROUGH_LOCATIONS
-          value: >-
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs
-      endpoints:
-        - name: tutorial
-          exposure: public
-          targetPort: 5001
-          protocol: https
-          secure: true
-      memoryLimit: 512Mi
-      mountSources: true
-      volumeMounts:
-        - name: tutorial-storage
-          path: /opt/user-walkthroughs
-
   - name: m2
     volume:
       size: 1G
-
-  - name: tutorial-storage
-    volume:
-      size: 256Mi
 
 events:
   postStart:
